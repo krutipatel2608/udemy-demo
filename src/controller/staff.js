@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const aws = require('aws-sdk')
+const bcrypt = require('bcrypt')
 
 const db = require('../model/index')
 const staffModel = db.staff
@@ -42,6 +43,9 @@ exports.add = async(req, res) => {
         
     }
     
+    const hashPass = bcrypt.hashSync(req.body.password, 10)
+    req.body.password = hashPass
+
     await staffModel.create(req.body)
     .then((staffData) => {
         return response(res, true, 201, 'staff added successfully!',staffData)

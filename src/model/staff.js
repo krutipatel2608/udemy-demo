@@ -20,6 +20,11 @@ module.exports = (sequelize, Sequelize) => {
                 notNull: true,
                 unique:true
             },
+            password: {
+                type: Sequelize.STRING(1000),
+                notNull: true,
+                unique: true
+            },
             joining_date: {
                 type: Sequelize.DATEONLY,
                 notNull: true
@@ -44,5 +49,13 @@ module.exports = (sequelize, Sequelize) => {
             tableName: 'staff'
           }
     )
+
+    staff.associate = models => {
+        staff.hasMany(models.attendance, {
+            foreignKey: 'staff_id',
+            sourceKey: 'id'
+        })
+    }
+
     return staff
 }

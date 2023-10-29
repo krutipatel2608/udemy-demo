@@ -1,12 +1,12 @@
 const staffController = require('../controller/staff')
-// const auth = require('../middleware/auth.middleware')
+const auth = require('../middleware/auth.middleware')
 
 module.exports = function(app, router) {
-    router.post('/staff-add',staffController.add)
-    router.get('/view-staff/:id', staffController.view)
-    router.get('/list-staff',staffController.list)
-    router.put('/edit-staff/:id',staffController.edit)
-    router.delete('/delete-staff/:id',staffController.remove)
+    router.post('/staff-add',auth,staffController.add)
+    router.get('/view-staff/:id',auth ,staffController.view)
+    router.get('/list-staff',auth ,staffController.list)
+    router.put('/edit-staff/:id',auth,staffController.edit)
+    router.delete('/delete-staff/:id',auth,staffController.remove)
     router.post('/create-bucket', staffController.uploadToS3)
 
     app.use('/api', router)
